@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+	<title>Vườn Cây Mini - Không gian đẹp cho khu vườn của bạn</title>
+	<link rel="stylesheet" href="Css/style.css">
+	<link rel="stylesheet" href="Css/fontawesome-free-5.15.1-web/css/all.css">
+</head>
+<body>
+	<header class="header">
+		
+		<div class="header-top">
+			<div class="logo" align="right">
+				<a href="Index.html"><img src="./Image/Logo/Logo.png" width="250px"></a>
+			</div>
+			<div class="search" >
+				<form >
+					<input placeholder="Bạn muốn tìm?..." type="text">
+					<label class="search-icon"><i class="fa fa-search"></i></label>
+				</form>
+			</div>
+			<div class="login" >
+				<i class="fa fa-user"></i>
+				<a id="name-user" href="Login.html" > 
+					ĐĂNG NHẬP
+				</a>
+				<script type="text/javascript">
+					window.onload = function(){
+						reloadUser();
+						
+					}
+					var user = JSON.parse(localStorage.getItem('userLoging'));
+					var text = ' '+ user.firstname +' ' + user.lastname +' ';
+					document.getElementById("name-user").innerHTML = text;
+					if(user.permission == 'user'){
+						document.getElementById("name-user").href = './User/User.html';
+					}else if(user.permission == 'admin'){
+						document.getElementById("name-user").href = './Admin/Admin.html';
+					}
+					function reloadUser(){
+						var userLoging = JSON.parse(localStorage.getItem('userLoging'));	
+						var users = JSON.parse(localStorage.getItem('users'));
+						var check = false;
+						for(i = 0; i<users.length;i++){
+							if(users[i].username == userLoging.username){
+								check = true;
+							}
+						}
+						if(check == false){
+							var temp = '[';
+							localStorage.removeItem('users');
+							for(i=0;i<users.length;i++){
+								temp += JSON.stringify(users[i]) + ',';
+							}
+							temp += JSON.stringify(userLoging) + ']';
+							localStorage.setItem('users', temp);
+						}
+					}
+				</script>
+			</div>
+			<div class="package">
+				<i class="fa fa-shopping-bag"></i>
+				<a href="Cart.html" >
+					GIỎ HÀNG
+				</a>
+				<div id="numberProductOfCart" style="color: #80A13D;font-weight: bold;"> (0) </div>
+				<script type="text/javascript">
+					var numberProductOfCart = JSON.parse(localStorage.getItem('carts'));
+					var text = '('+ numberProductOfCart.length +')';
+					document.getElementById("numberProductOfCart").innerHTML = text;
+				</script>
+			</div>
+		</div>
+		<div class="header-bottom">
+			<nav class="menu">
+    			<ul class="clearfix">
+		            <li id="home"><a href="Index.html" >TRANG CHỦ</a></li>
+		            <li id="intr"><a href="Introduce.html" >GIỚI THIỆU</a></li>
+		            <li id="prod">
+		                <a href="Product.html">SẢN PHẨM</a>
+		                <ul class="sub-menu">
+		                    <li id="bons"><a href="Product.html#bons"><img src="./Image/Icon/icon-bonsai.png">Bonsai</a></li>
+		                    <li id="seda"><a href="Product.html#seda"><img src="./Image/Icon/icon-cay-canh-sen-da.png" >Cây Cảnh Sen Đá</a></li>
+		                    <li id="tnha"><a href="Product.html#tnha"><img src="./Image/Icon/icon-cay-canh-trong-nha.png">Cây Cảnh Trong Nhà</a></li>
+		                    <li id="vanp"><a href="Product.html#vanp"><img src="./Image/Icon/icon-cay-canh-van-phong.png">Cây Cảnh Văn Phòng</a></li>
+		                    <li id="xuro"><a href="Product.html#xuro"><img src="./Image/Icon/icon-xuong-rong.png">Cây Xương Rồng</a></li>
+		                    <li id="thsi"><a href="Product.html#thsi"><img src="./Image/Icon/icon-cay-thuy-sinh.png">Cây Thủy Sinh</a></li>
+		      				<li id="terr"><a href="Product.html#terr"><img src="./Image/Icon/icon-terrarium.png">TERRARIUM</a></li>
+		                </ul>
+		            </li>
+		            <li id="cont"><a href="Contact.html">LIÊN HỆ</a></li>
+		        </ul>
+			</nav>
+			
+		</div>
+	
+	</header>
+	
+	<!--Phan cart-->
+	 <section class="cart">
+	 	<div id="cart-items-wrap"></div>
+        <script type="text/javascript">
+        	window.onload = function(){
+    			createCart();
+    			updateCart();
+    		}
+        	function createCart(){
+	    		var carts = JSON.parse(localStorage.getItem('carts'));
+	        	var i;
+	        	var text = '';
+	        	var text1 = '<table class="cart-items"><thead><tr><td class="cart-image">Hình ảnh</td><td class="cart-ttl">Sản phẩm</td><td class="cart-price">Giá</td><td class="cart-quantity">Số lượng</td><td class="cart-summ">Thành tiền</td><td class="cart-del">&nbsp;</td></tr></thead><tbody>';
+	        	if(carts.length == 0){
+	        		text += '<div style="text-align:center;margin:100px;">Không có sản phẩm trong giỏ hàng</div>';
+	        		document.getElementById("cart-items-wrap").innerHTML = text;
+	        	}else{
+	        		for(i = 0;i<carts.length;i++){
+	        			text1 += '<tr><td class="cart-image"><a href="ProductInfo.html"><img src="'+ carts[i].image +'" style="width:150px; height:150px;"></a></td><td class="cart-ttl"><a href="ProductInfo.html">'+ carts[i].name +'</a></td><td class="cart-price"><b>'+ carts[i].price +'</b></td><td class="cart-quantity"><p class="cart-qnt"><input type="number" class="quantity-input" step="1" min="1" max="'+ carts[i].amount +'" name="quantity" value="'+ carts[i].numberbuy +'" title="SL" size="4" pattern="[0-9]*" inputmode="numeric" aria-labelledby=""></p></td><td class="cart-summ"><b>'+ (carts[i].price*carts[i].numberbuy) +'</b></td><td class="cart-del" onclick="removeCart('+ carts[i].code +')"><a href="#" class="cart-remove">×</a></td></tr>';
+	        		}
+	        		text1 += '</tbody></table>';
+	        		document.getElementById("cart-items-wrap").innerHTML = text1;
+	        	}
+        	}
+        	function removeCart(code){
+        		var i;
+        		var j;
+
+				var cart = '[';
+				var product = JSON.parse(localStorage.getItem('carts'));
+				localStorage.removeItem('carts');
+				for(i=0;i<product.length;i++){
+					if(product[i].name == code){
+						product.splice(i,1);
+					}
+				}
+				for(i=0;i<product.length;i++){
+					if(i == (product.length - 1)){
+						cart += JSON.stringify(product[i]);
+					}else{
+					cart += JSON.stringify(product[i]) + ',';
+					}
+				}
+			 	cart += ']';
+				localStorage.setItem('carts', cart);
+        		createCart();
+        	}
+        						
+			function updateCart(){
+				var i;
+				var sum = 0;
+				var numberbuy = document.getElementsByClassName("quantity-input");
+				var sum_update = document.getElementsByClassName("cart-summ");
+				
+				var carts = JSON.parse(localStorage.getItem('carts'));
+				for(i=0;i<carts.length;i++){
+					carts[i].numberbuy = numberbuy[i].value;
+					sum += (carts[i].price*carts[i].numberbuy);
+					sum_update[i+1].innerHTML = sum;
+			 	}
+			 	
+				document.getElementById("Price-amount").innerHTML = sum;
+				
+				var transport_fee = document.getElementById("transport-fee-input").value;
+				var sum_all = Number(sum) + Number(transport_fee);
+				
+				document.getElementById("woocommerce-Price-amount").innerHTML = sum_all;
+				document.getElementsByClassName("cart-summ").innerHTML = sum_all;
+				var numberProductOfCart = JSON.parse(localStorage.getItem('carts'));
+				var text = '('+ numberProductOfCart.length +')';
+				document.getElementById("numberProductOfCart").innerHTML = text;
+			}
+        </script>
+        <div id="pay-wrap" style="padding-left: 50px;">
+        	<table cellspacing="0" style="border-bottom: 3px solid gray;width: 300px;text-align: left;">
+			    <thead >
+			        <tr>
+			            <th colspan="2" style="border-width:3px; color: #80A13D;font-weight: bold;">Thanh toán</th>
+			        </tr>
+			    </thead>
+			</table>
+			<table cellspacing="0" class="shop_table">
+				<tbody>
+					<tr class="cart-subtotal">
+						<th>Tổng cộng</th>
+						<td data-title="Tổng cộng">
+							<span id="Price-amount">0
+							</span>
+							<span id="Price-currencySymbol">&nbsp;₫
+							</span>
+						</td>
+					</tr>
+					<tr class="order-total">
+						<th>Giao hàng </th>
+						<td data-title="Giao hàng">
+							<select id="delivery-method" onchange="chooseDeliveryMethod()" style="width: auto;height: 40px;padding-left: 10px;">
+							  <option value="17600">Giao Hàng Tiết Kiệm</option>
+							  <option value="30000">Ecotrans</option>
+							  <option value="25500">Viettel Port</option>
+							  <option value="23500">VN Port</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="order-total">
+						<th>Phí vận chuyển</th>
+						<td data-title="Phí vận chuyển">
+							<div id="transport-fee"></div>
+							<script type="text/javascript">
+								chooseDeliveryMethod();
+								function chooseDeliveryMethod(){
+									var text = '<input id="transport-fee-input" value="';
+									text += document.getElementById("delivery-method").value;
+									text += '"><span>&nbsp;₫</span>'
+									document.getElementById("transport-fee").innerHTML = text;
+									localStorage.setItem('transport-fee',document.getElementById("delivery-method").value);
+									updateCart();
+								}
+							</script>
+						</td>
+					</tr>
+					<tr class="order-total">
+						<th>Tổng cộng</th>
+						<td data-title="Tổng cộng">
+							<strong>
+								<span id="woocommerce-Price-amount"></span>
+								<span id="woocommerce-Price-currencySymbol">&nbsp;₫</span>
+							</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<button class="wc-proceed-to-checkout" style="cursor: pointer;">	
+				<a href="" id="checkout-button" style="width: 330px;height: 40;">Tiến hành thanh toán</a>
+			</button>
+			<script type="text/javascript">
+				var numberProductOfCart = JSON.parse(localStorage.getItem('carts'));
+				if (numberProductOfCart.length != 0) {
+					document.getElementById("checkout-button").href = 'Pay.html';
+				}
+			</script>
+	        <form class="checkout_coupon" method="post">
+				<div class="coupon">
+					<h3 class="widget-title">
+						<i class="icon-tag"></i> Phương thức thanh toán
+					</h3>
+					<select id="pay-method" onchange="choosePayMethod()" style="width: 330px;height: 40px;padding-left: 10px;">
+					  <option value="Thanh Toán Khi Nhận Hàng">Thanh Toán Khi Nhận Hàng</option>
+					  <option value="Ví Điện Tử Momo">Ví Điện Tử Momo</option>
+					  <option value="Thẻ Ngân Hàng">Thẻ Ngân Hàng</option>
+					  <option value="Zalo Pay"></option>
+					</select>
+				</div>
+				<script type="text/javascript">
+					function choosePayMethod(){
+						localStorage.setItem('pay-method',document.getElementById("pay-method").value);
+					}
+				</script>
+			</form>
+		</section>
+		<div class="table-endow">
+	    	<a href="Product.html"><button type="button" class="wc-proceed-to-checkout" style="margin-left: 15%;"><<- Tiếp tục mua sắm</button></a>
+	    	<button type="button" class="wc-proceed-to-checkout" style="margin-left: 20px;cursor: pointer;" onclick="updateCart()">Cập nhật giỏ hàng ->></button>
+</body>
+	    </div>
+	</div>
+	<!--Phan footer-->
+	 <footer>
+		<div class="footer-top">
+		    <li><a href="Index.html"><img src="Image/dathongbao.png" alt=""></a></li>
+		    <li><a href="Introduce.html">Giới thiệu</a></li>
+		    <li><a href="Contact.html">Liên hệ</a></li>
+		    <li><a href="Contact.html">Thông tin khuyến mãi</a></li>
+		    <li>
+		        <a href="https://vi-vn.facebook.com/" class="fab fa-facebook-f" style="color: blue;"></a>
+		        <a href="https://twitter.com/?lang=vi" class="fab fa-twitter" style="color: #1DA4BC;"></a>
+		        <a href="https://www.youtube.com/" class="fab fa-youtube" style="color: red;"></a>
+		    </li>
+		</div>
+		<div class="footer-center">
+		    <p>
+		       Nhóm đề tài Phát Triển Ứng Dụng Web 1 <br>
+		       Địa chỉ: Trường Đại Học Sài Gòn, 273, An Dương Vương, Phường 3, Quận 5, TP.Hồ Chí Minh, Việt Nam<br>
+		       Đặt hàng online : <a style="color: white;" href=""><b>0111 222 3333</b></a> .
+		    </p>
+		</div>
+		<div class="footer-bottom">
+		    ©Vườn Cây Mini All rights reserved
+		</div>
+	</footer>
+	
+
+</html>

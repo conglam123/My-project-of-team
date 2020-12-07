@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+	<title>Vườn Cây Mini - Không gian đẹp cho khu vườn của bạn</title>
+	<link rel="stylesheet" href="Css/style.css">
+	<link rel="stylesheet" href="Css/fontawesome-free-5.15.1-web/css/all.css">
+	<script type="text/javascript">
+		window.onload = function(){
+			var ordersBooked = [
+			];
+			localStorage.setItem('ordersBooked',JSON.stringify(ordersBooked));
+		}
+	</script>
+</head>
+<body>
+	<header class="header">
+		
+		<div class="header-top">
+			<div class="logo" align="right">
+				<a href="Index.html"><img src="./Image/Logo/Logo.png" width="250px"></a>
+			</div>
+			<div class="search" >
+				<form >
+					<input placeholder="Bạn muốn tìm?..." type="text">
+					<label class="search-icon"><i class="fa fa-search"></i></label>
+				</form>
+			</div>
+			<div class="login" >
+				<i class="fa fa-user"></i>
+				<a id="name-user" href="Login.html" id="nameUser"> 
+					ĐĂNG NHẬP
+				</a>
+				<script type="text/javascript">
+					window.onload = function(){
+						reloadUser();
+						
+					}
+					var user = JSON.parse(localStorage.getItem('userLoging'));
+					var text = ' '+ user.firstname +' ' + user.lastname +' ';
+					document.getElementById("name-user").innerHTML = text;
+					if(user.permission == 'user'){
+						document.getElementById("name-user").href = './User/User.html';
+					}else if(user.permission == 'admin'){
+						document.getElementById("name-user").href = './Admin/Admin.html';
+					}
+					function reloadUser(){
+						var userLoging = JSON.parse(localStorage.getItem('userLoging'));	
+						var users = JSON.parse(localStorage.getItem('users'));
+						var check = false;
+						for(i = 0; i<users.length;i++){
+							if(users[i].username == userLoging.username){
+								check = true;
+							}
+						}
+						if(check == false){
+							var temp = '[';
+							localStorage.removeItem('users');
+							for(i=0;i<users.length;i++){
+								temp += JSON.stringify(users[i]) + ',';
+							}
+							temp += JSON.stringify(userLoging) + ']';
+							localStorage.setItem('users', temp);
+						}
+					}
+				</script>
+			</div>
+			<div class="package">
+				<i class="fa fa-shopping-bag"></i>
+				<a href="Cart.html" >
+					GIỎ HÀNG
+				</a>
+				<div id="numberProductOfCart" style="color: #80A13D;font-weight: bold;"> (0) </div>
+				<script type="text/javascript">
+					var numberProductOfCart = JSON.parse(localStorage.getItem('carts'));
+					var text = '('+ numberProductOfCart.length +')';
+					document.getElementById("numberProductOfCart").innerHTML = text;
+				</script>
+			</div>
+		</div>
+		<div class="header-bottom">
+			<nav class="menu">
+    			<ul class="clearfix">
+		            <li id="home"><a href="Index.html" >TRANG CHỦ</a></li>
+		            <li id="intr"><a href="Introduce.html" >GIỚI THIỆU</a></li>
+		            <li id="prod">
+		                <a href="Product.html">SẢN PHẨM</a>
+		                <ul class="sub-menu">
+		                    <li id="bons"><a href="Product.html#bons"><img src="./Image/Icon/icon-bonsai.png">Bonsai</a></li>
+			                <li id="seda"><a href="Product.html#seda"><img src="./Image/Icon/icon-cay-canh-sen-da.png">Cây Cảnh Sen Đá</a></li>
+			                <li id="tnha"><a href="Product.html#tnha"><img src="./Image/Icon/icon-cay-canh-trong-nha.png">Cây Cảnh Trong Nhà</a></li>
+			                <li id="vanp"><a href="Product.html#vanp"><img src="./Image/Icon/icon-cay-canh-van-phong.png">Cây Cảnh Văn Phòng</a></li>
+			                <li id="xuro"><a href="Product.html#xuro"><img src="./Image/Icon/icon-xuong-rong.png">Cây Xương Rồng</a></li>
+			                <li id="thsi"><a href="Product.html#thsi"><img src="./Image/Icon/icon-cay-thuy-sinh.png">Cây Thủy Sinh</a></li>
+			  				<li id="terr"><a href="Product.html#terr"><img src="./Image/Icon/icon-terrarium.png">TERRARIUM</a></li>
+		                </ul>
+		            </li>
+		            <li id="cont"><a href="Contact.html" >LIÊN HỆ</a></li>
+		        </ul>
+			</nav>
+			
+		</div>
+	
+	</header>
+	
+	<!--Phan pay-->
+	<section class="wrap">
+		<div class="woocommerce">
+			<form id="end" method="post" style="display:none">
+				<div style="display: inline-flex;" >
+					<p style="margin-left: 30%;margin-top: 200px;text-align: center; ">Bạn đã thanh toán thành công. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất. Xin chân thành cảm ơn</p>
+					<img src="./Image/thanhtoan.png" style="margin-left: 10%;width: 1000px;height: 500px;">
+				</div>
+				<a href="Index.html"><button type="button" class="wc-proceed-to-checkout" style="margin-left: 50%;"><<- Tiếp tục mua sắm</button></a>
+			</form>
+			<form name="checkout" method="post" id="checkout" action="" enctype="multipart/form-data" novalidate="novalidate" >
+				<div class="woocommerce-billing">
+					<h3>Thông tin thanh toán</h3>
+					<div class="woocommerce-billing-fields">
+						<p class="form-row" id="billing_first_name_field" data-priority="10">
+							<label for="billing_first_name" class="billing">Họ</label>
+							<input type="text" class="input-text" name="billing_first_name" id="billing_first_name" placeholder="" value="" autocomplete="given-name" style="width: 300px;height: 30px;font-size: 15px;margin: 10px 100px;" required="">
+						</p>
+						<script type="text/javascript">
+						  	var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						  	document.getElementById("billing_first_name").value = userLoging.firstname;
+						  </script>
+						<p class="form-row" id="billing_last_name_field" data-priority="20">
+							<label for="billing_last_name" class="billing">Tên</label>
+							<input type="text" class="input-text" name="billing_last_name" id="billing_last_name" placeholder="" value="" autocomplete="family-name" style="width: 300px;height: 30px;font-size: 15px;margin: 10px 93px;" required="">
+						</p>
+						<script type="text/javascript">
+						  	var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						  	document.getElementById("billing_last_name").value = userLoging.lastname;
+						  </script>
+						<p class="form-row" id="billing_city_field" data-priority="50" data-o_class="form-row">
+							<label for="billing_city" class="billing">Tỉnh / Thành phố</label>
+							<input type="text" class="input-text" name="billing_city" id="billing_city" placeholder="" value="" autocomplete="address-level" style="width: 300px;height: 30px;font-size: 15px;margin: 10px 7px;" required="">
+						</p>
+						<script type="text/javascript">
+						  	var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						  	document.getElementById("billing_city").value = userLoging.city;
+						  </script>
+						<p class="form-row" id="billing_state_field" data-priority="100">
+							<label for="billing_state" class="billing">Quận / huyện</label>
+							<input type="text" class="input-text" name="billing_state" id="billing_state" value="" placeholder="" autocomplete="address-level" style="width: 300px;height: 30px;font-size: 15px;margin: 10px 30px;" required="">
+						</p>
+						<script type="text/javascript">
+						  	var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						  	document.getElementById("billing_state").value = userLoging.district;
+						  </script>
+						<p class="form-row" id="billing_address_field" data-priority="50">
+							<label for="billing_address" class="billing">Địa chỉ</label>
+							<input type="text" class="input-text" name="billing_address" id="billing_address" placeholder="Số nhà và tên đường" value="" autocomplete="address-level" style="width: 300px;height: 30px;font-size: 15px;margin: 10px 73px;" required="">
+						</p>
+						<script type="text/javascript">
+						  	var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						  	document.getElementById("billing_address").value = userLoging.address;
+						  </script>
+						<p class="form-row" id="billing_phone_field" data-priority="15">
+							<label for="billing_phone" class="billing">Số điện thoại</label>
+							<input type="tel" class="input-text" name="billing_phone" id="billing_phone" placeholder="" value="" autocomplete="tel" style="width: 300px;height: 30px;font-size: 15px;margin: 10px 30px;border:2px solid;" required="">
+							</p>
+							<script type="text/javascript">
+						  	var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						  	document.getElementById("billing_phone").value = userLoging.phone;
+						  </script>
+						<p class="form-row" id="billing_email_field" data-priority="100">
+							<label for="billing_email" class="billing">Địa chỉ email</label>
+							<input type="email" class="input-text" name="billing_email" id="billing_email" placeholder="" value="" autocomplete="email username" style="width: 300px;height: 30px;font-size: 15px;margin: 10px 32px;" required="">
+						</p>
+						<script type="text/javascript">
+						  	var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						  	document.getElementById("billing_email").value = userLoging.email;
+						  </script>
+						<p class="form-row" id="order_comments_field" data-priority="">
+							<label for="order_comments" class="billing" style="">Ghi chú đơn hàng
+							</label>
+						</p>
+						<textarea name="order_comments" class="input-textarea" id="order_comments" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn." rows="5" cols="58" style="margin:10px 50px; border:2px solid;"></textarea>
+						<p class="form-row" id="order_comments_field">
+							<input type="button" name="button-buy" class="button-buy" style="cursor: pointer;" value="Mua hàng" onclick="pay()" >
+						</p>
+					</div>
+			  	</div>
+			  	<script type="text/javascript">
+			  		function pay(){
+			  			addToBills();
+			  			localStorage.removeItem('carts');
+			  			localStorage.removeItem('transport-fee');
+			  			document.getElementById("end").style.display = 'block';
+			  			document.getElementById("checkout").style.display = 'none'; 
+			  		}
+			  		function addToBills(){
+						var i;
+						var ordersBooked = '[';
+						var existOrdersBooked = JSON.parse(localStorage.getItem('bills'));
+						var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						var bills = '';
+						localStorage.removeItem('bills');
+
+						for(i=0;i<existOrdersBooked.length;i++){
+							ordersBooked += JSON.stringify(existOrdersBooked[i]) + ',';
+					 	}
+					 	var userLoging = JSON.parse(localStorage.getItem('userLoging'));
+						var carts = JSON.parse(localStorage.getItem('carts'));
+						ordersBooked += '{"codebill":'+JSON.stringify((existOrdersBooked.length + 1))+ ',';
+						ordersBooked += '"usernamebuy":'+JSON.stringify(userLoging.username)+ ',';
+						ordersBooked += '"productbuy":[';
+						for(i=0;i<carts.length;i++){
+							ordersBooked += '{';
+							ordersBooked += '"code":' + JSON.stringify(carts[i].code)+ ',';
+							ordersBooked += '"name":' +JSON.stringify(carts[i].name)+ ',';
+							ordersBooked += '"price":' +JSON.stringify(carts[i].price)+ ',';
+							ordersBooked += '"species":' +JSON.stringify(carts[i].species)+ ',';
+							ordersBooked += '"discount":' +JSON.stringify(carts[i].discount)+ ',';
+							ordersBooked += '"image":' +JSON.stringify(carts[i].image)+ ',';
+							ordersBooked += '"numberbuy":' +JSON.stringify(carts[i].numberbuy);
+							ordersBooked += '}';
+							if(i != (carts.length - 1)){
+								ordersBooked += ',';
+							}
+				 		}
+				 		var transportfee = localStorage.getItem('transport-fee'); 
+						var paymethod = localStorage.getItem('pay-method');
+				 		ordersBooked +=  '],"transportfee":' + JSON.stringify(transportfee) + ',"paymethod":'+ JSON.stringify(paymethod) + ',"status":"Chưa xử lý"}]';
+						localStorage.setItem('bills', ordersBooked);
+					}
+			  		
+			  	</script>
+	  			<div class="checkout-sidebar">
+	  				<h3>Đơn hàng của bạn</h3>
+	  				<div id="order_review" class="woocommerce-checkout-review-order">
+					</div>
+					<script type="text/javascript">
+						window.onload = function(){
+							createBill();
+						}
+						function createBill() {
+							var carts = JSON.parse(localStorage.getItem('carts'));
+							var i;
+							var sum = 0;
+							var text = '<table class="shop_table"><tr><th >Sản phẩm</th><th class="product-total">Thành tiền</th></tr>';
+							for(i = 0 ;i < carts.length; i++){
+								text += '<tr class="cart_item"><td class="product-name"><img src="'+ carts[i].image +'" style="width:50px; height:50px;margin-right:20px;" >'+ carts[i].name +'&nbsp;<strong class="product-quantity">× '+ carts[i].numberbuy +'</strong></td><td class="product-total"><span class="Price-amount">'+ (carts[i].price*carts[i].numberbuy) +'</span><span class="Price-currencySymbol">&nbsp;₫</span></td></tr>';
+								sum += Number(carts[i].price*carts[i].numberbuy);
+							}
+							var transportfee = localStorage.getItem('transport-fee'); 
+							var paymethod = localStorage.getItem('pay-method'); 
+							sum += Number(transportfee);
+							text += '<tr class="shipping"><th>Phí giao hàng</th><td>'+ transportfee +'</td></tr><tr class="cart-subtotal"><th>Tổng cộng</th><td><span class="woocommerce-Price-amount">'+ sum +'</span><span class="woocommerce-Price-currencySymbol">&nbsp;₫</span></td></tr>';
+							text += '<tr class="shipping"><th>Phương thúc thanh toán</th><td>'+ paymethod +'</td></tr></table>';
+							document.getElementById("order_review").innerHTML = text;
+						}
+					</script>
+				</div>		
+			</form>
+		</div>
+	</section>
+
+	<!--Phan footer-->
+	<footer>
+		<div class="footer-top">
+		    <li><a href="Index.html"><img src="Image/dathongbao.png" alt=""></a></li>
+		    <li><a href="Introduce.html">Giới thiệu</a></li>
+		    <li><a href="Contact.html">Liên hệ</a></li>
+		    <li><a href="Contact.html">Thông tin khuyến mãi</a></li>
+		    <li>
+		        <a href="https://vi-vn.facebook.com/" class="fab fa-facebook-f" style="color: blue;"></a>
+		        <a href="https://twitter.com/?lang=vi" class="fab fa-twitter" style="color: #1DA4BC;"></a>
+		        <a href="https://www.youtube.com/" class="fab fa-youtube" style="color: red;"></a>
+		    </li>
+		</div>
+		<div class="footer-center">
+		    <p>
+		       Nhóm đề tài Phát Triển Ứng Dụng Web 1 <br>
+		       Địa chỉ: Trường Đại Học Sài Gòn, 273, An Dương Vương, Phường 3, Quận 5, TP.Hồ Chí Minh, Việt Nam<br>
+		       Đặt hàng online : <a style="color: white;" href=""><b>0111 222 3333</b></a> .
+		    </p>
+		</div>
+		<div class="footer-bottom">
+		    ©Vườn Cây Mini All rights reserved
+		</div>
+	</footer>
+</body>
+</html>

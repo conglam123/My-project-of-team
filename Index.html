@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+	<title>Vườn Cây Mini - Không gian đẹp cho khu vườn của bạn</title>
+	<link rel="stylesheet" href="Css/style.css">
+	<link rel="stylesheet" href="Css/fontawesome-free-5.15.1-web/css/all.css">
+</head>
+<body>
+	<header class="header">
+		
+		<div class="header-top">
+			<div class="logo" align="right">
+				<a href="Index.html"><img src="./Image/Logo/Logo.png" width="250px"></a>
+			</div>
+			<div class="search" >
+				<form >
+					<input placeholder="Bạn muốn tìm?..." type="text">
+					<label class="search-icon"><i class="fa fa-search"></i></label>
+				</form>
+			</div>
+			<div class="login" >
+				<i class="fa fa-user"></i>
+				<a id="name-user" href="Login.html" > 
+					ĐĂNG NHẬP
+				</a>
+				<script type="text/javascript">
+					window.onload = function(){
+						reloadUser();
+						var carts = [];
+						localStorage.setItem('carts', JSON.stringify(carts));
+					}
+					var user = JSON.parse(localStorage.getItem('userLoging'));
+					var text = ' '+ user.firstname +' ' + user.lastname +' ';
+					document.getElementById("name-user").innerHTML = text;
+					if(user.permission == 'user'){
+						document.getElementById("name-user").href = './User/User.html';
+					}else if(user.permission == 'admin'){
+						document.getElementById("name-user").href = './Admin/Admin.html';
+					}
+					function reloadUser(){
+						var userLoging = JSON.parse(localStorage.getItem('userLoging'));	
+						var users = JSON.parse(localStorage.getItem('users'));
+						var check = false;
+						for(i = 0; i<users.length;i++){
+							if(users[i].username == userLoging.username){
+								check = true;
+							}
+						}
+						if(check == false){
+							var temp = '[';
+							localStorage.removeItem('users');
+							for(i=0;i<users.length;i++){
+								temp += JSON.stringify(users[i]) + ',';
+							}
+							temp += JSON.stringify(userLoging) + ']';
+							localStorage.setItem('users', temp);
+						}
+					}
+				</script>
+			</div>
+			<div class="package">
+				<i class="fa fa-shopping-bag"></i>
+				<a href="Cart.html" >
+					GIỎ HÀNG
+				</a>
+				<div id="numberProductOfCart" style="color: #80A13D;font-weight: bold;"> (0) </div>
+				<script type="text/javascript">
+					var numberProductOfCart = JSON.parse(localStorage.getItem('carts'));
+					var text = '('+ numberProductOfCart.length +')';
+					document.getElementById("numberProductOfCart").innerHTML = text;
+				</script>
+			</div>
+		</div>
+		<div class="header-bottom">
+			<nav class="menu">
+    			<ul class="clearfix">
+		            <li id="home"><a href="Index.html" style="color: black;">TRANG CHỦ</a></li>
+		            <li id="intr"><a href="Introduce.html">GIỚI THIỆU</a></li>
+		            <li id="prod">
+		                <a href="Product.html">SẢN PHẨM</a>
+		                <ul class="sub-menu">
+		                    <li id="bons"><a href="Product.html#bons"><img src="./Image/Icon/icon-bonsai.png">Bonsai</a></li>
+		                    <li id="seda"><a href="Product.html#seda"><img src="./Image/Icon/icon-cay-canh-sen-da.png" >Cây Cảnh Sen Đá</a></li>
+		                    <li id="tnha"><a href="Product.html#tnha"><img src="./Image/Icon/icon-cay-canh-trong-nha.png">Cây Cảnh Trong Nhà</a></li>
+		                    <li id="vanp"><a href="Product.html#vanp"><img src="./Image/Icon/icon-cay-canh-van-phong.png">Cây Cảnh Văn Phòng</a></li>
+		                    <li id="xuro"><a href="Product.html#xuro"><img src="./Image/Icon/icon-xuong-rong.png">Cây Xương Rồng</a></li>
+		                    <li id="thsi"><a href="Product.html#thsi"><img src="./Image/Icon/icon-cay-thuy-sinh.png">Cây Thủy Sinh</a></li>
+		      				<li id="terr"><a href="Product.html#terr"><img src="./Image/Icon/icon-terrarium.png">TERRARIUM</a></li>
+		                </ul>
+		            </li>
+		            <li id="cont"><a href="Contact.html">LIÊN HỆ</a></li>
+		        </ul>
+			</nav>
+			
+		</div>
+	
+	</header>
+	<section class="container">
+		<!--Phan Slider-->
+		<div class="slideshow-container" style="height:500px;">
+			<div class="mySlides fade">
+			  <img src="./Image/Slider/slide1.jpg" style="width:100%; height:600px;" >
+			  <div class="text">
+					<div class="text-inner text-center">
+
+					<h2 style="font-size: 30px;margin:10px 0px;"><strong>VƯỜN CÂY MINI</strong></h2>
+					<h3 style="font-size: 20px;margin:10px 0px;">Sức Sống Mỗi Ngày</h3>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+					<a href="Contact.html" target="_self" class="button">
+					<span>Liên hệ</span>
+					</a>
+
+					<a href="Introduce.html" target="_self" class="button">
+					<span>Giới thiệu</span>
+					</a>
+
+              </div>
+			  </div>
+			</div>
+
+			<div class="mySlides fade">
+			  <img src="./Image/Slider/slide2.jpg" style="width:100%; height:600px;">
+			  <div class="text">
+			  	<div class="text-inner text-center">
+                  
+					<h2 style="font-size: 30px;margin:10px 0px;"><strong>GREEN MONA</strong></h2>
+					<h3 style="font-size: 20px;margin:10px 0px;">Uy Tín – Chất Lượng</h3>
+					<p>Lorem ipsum dolor sit amet, conse.</p>
+					<a href="Product.html" target="_self" class="button">
+					    <span>Sản phẩm</span>
+					  </a>
+
+              </div>
+			  </div>
+			</div>
+
+			<div class="mySlides fade">
+			  <img src="./Image/Slider/slide3.jpg" style="width:100%; height:600px;">
+			  <div class="text">
+			  	<div class="text-inner text-center">
+                  
+					<h2 style="font-size: 30px;margin:10px 0px;"><strong>GREEN MONA</strong></h2>
+					<h3 style="font-size: 20px;margin:10px 0px;">Cung Cấp Cây Cảnh</h3>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+					<a href="Index.html" target="_self" class="button">
+					    <span>Trang chủ</span>
+					  </a>
+
+              	</div>
+			  </div>
+			</div>
+
+			<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+		</div>
+		<br>
+		<div style="text-align:center">
+		  <span class="dot" onclick="currentSlide(1)"></span> 
+		  <span class="dot" onclick="currentSlide(2)"></span> 
+		  <span class="dot" onclick="currentSlide(3)"></span> 
+		</div>
+
+		<script>
+			var slideIndex = 0;
+			showAutoSlides();
+
+			function showAutoSlides() {
+			  var i;
+			  var slides = document.getElementsByClassName("mySlides");
+			  var dots = document.getElementsByClassName("dot");
+			  for (i = 0; i < slides.length; i++) {
+			    slides[i].style.display = "none";  
+			  }
+			  slideIndex++;
+			  if (slideIndex > slides.length) {slideIndex = 1}    
+			  for (i = 0; i < dots.length; i++) {
+			    dots[i].className = dots[i].className.replace(" active", "");
+			  }
+			  slides[slideIndex-1].style.display = "block";
+			  slides[slideIndex-1].style.animation = "slideMoving 5s forwards";  
+			  dots[slideIndex-1].className += " active";
+			  setTimeout(showAutoSlides, 10000); // Change image every 10 seconds
+			}
+
+			showSlides(slideIndex);
+
+			function plusSlides(n) {
+			  showSlides(slideIndex += n);
+			}
+
+			function currentSlide(n) {
+			  showSlides(slideIndex = n);
+			}
+
+			function showSlides(n) {
+			  var i;
+			  var slides = document.getElementsByClassName("mySlides");
+			  var dots = document.getElementsByClassName("dot");
+			  if (n > slides.length) {slideIndex = 1}    
+			  if (n < 1) {slideIndex = slides.length}
+			  for (i = 0; i < slides.length; i++) {
+			      slides[i].style.display = "none";  
+			  }
+			  for (i = 0; i < dots.length; i++) {
+			      dots[i].className = dots[i].className.replace(" active", "");
+			  }
+			  slides[slideIndex-1].style.display = "block";  
+			  slides[slideIndex-1].style.animation = "slideMoving 1s forwards";
+			  dots[slideIndex-1].className += " active";
+			}
+		</script>
+
+		<!--Phan Home-->
+		<div class="product-container">
+			<div class="promotion-discount">
+				<div class="name-card" onclick="disPlay(this)">SẢN PHẨM KHUYẾN MÃI</div>
+				<div id="discount-products"></div>
+				<script type="text/javascript">
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text = '';
+					var i;
+					for(i = 0;i<product.length;i++){
+						if(product[i].discount !== 0){
+							text += '<a href="ProductInfo.html"><div class="products-card" name="discount" style="animation-timing-function: ease-in-out;" onclick="rememberProduct('+ product[i].code +')"><div class="discount-card">'+ product[i].discount +'%</div><img src="'+ product[i].image +'" style="width:150px; height:150px;z-index:2;margin-top:-40px;"><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+						}
+					}
+					document.getElementById("discount-products").innerHTML = text;
+
+					var prodIndex = 0;
+					showProd1(prodIndex);
+
+					function plusProducts1(n) {
+
+			  			showProd1(prodIndex += n);
+					}
+
+					function showProd1(n) {
+			  			var i;
+			  			var prods = document.getElementsByName("discount");
+			  
+			  			if (n > prods.length - 5) {prodIndex = prods.length - 5}    
+			  			if (n < 0) {prodIndex = 0}
+			  			for (i = 0; i < prods.length; i++) {
+			      			prods[i].style.display = "none";  
+			  			}
+			  			var x;
+				  		for(i=4;i>=0;i--){
+				  			x = Math.abs(prodIndex+i);
+				  			prods[x].style.display = "block";
+				  			prods[x].style.animation = "slideMoving 2s forwards";
+				 		}
+					}
+				</script>
+				<a class="prev" onclick="plusProducts1(-1)">&#10094;</a>
+				<a class="next" onclick="plusProducts1(1)">&#10095;</a>
+			</div>
+			<div class="products-home">
+				<div class="name-card" onclick="disPlay(this)">BONSAI</div>
+				<div id="bonsai-products"></div>
+				<script type="text/javascript">
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text = '';
+					var i;
+					for(i = 0;i<product.length;i++){
+						if(product[i].species == 'Bonsai'){
+							text += '<a href="ProductInfo.html"><div class="products-card" name="bonsai" style="animation-timing-function: ease-in-out;" onclick="rememberProduct('+ product[i].code +')"><img src="'+ product[i].image +'" style="width:150px; height:150px;" ><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+						}
+					}			
+					document.getElementById("bonsai-products").innerHTML = text;
+
+					var prodIndex = 0;
+					showProd2(prodIndex);
+
+					function plusProducts2(n) {
+
+			  			showProd2(prodIndex += n);
+					}
+
+					function showProd2(n) {
+			  			var i;
+			  			var prods = document.getElementsByName("bonsai");
+			  
+			  			if (n > prods.length - 5) {prodIndex = prods.length - 5}    
+			  			if (n < 0) {prodIndex = 0}
+			  			for (i = 0; i < prods.length; i++) {
+			      			prods[i].style.display = "none";  
+			  			}
+			  			var x;
+				  		for(i=4;i>=0;i--){
+				  			x = Math.abs(prodIndex+i);
+				  			prods[x].style.display = "block";
+				  			prods[x].style.animation = "slideMoving 2s forwards";
+				 		}
+					}
+				</script>
+				<a class="prev" onclick="plusProducts2(-1)">&#10094;</a>
+				<a class="next" onclick="plusProducts2(1)">&#10095;</a>
+			</div>
+			<div class="products-home">
+				<div class="name-card" onclick="disPlay(this)">CÂY CẢNH SEN ĐÁ</div>
+				<div id="stonelotus-products"></div>
+				<script type="text/javascript">
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text = '';
+					var i;
+					for(i = 0;i<product.length;i++){
+						if(product[i].species == 'Cây Cảnh Sen Đá'){
+							text += '<a href="ProductInfo.html"><div class="products-card" name="stonelotus" style="animation-timing-function: ease-in-out;" onclick="rememberProduct('+ product[i].code +')"><img src="'+ product[i].image +'" style="width:150px; height:150px;"><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+						}
+					}
+					document.getElementById("stonelotus-products").innerHTML = text;
+
+					var prodIndex = 0;
+					showProd3(prodIndex);
+
+					function plusProducts3(n) {
+
+			  			showProd3(prodIndex += n);
+					}
+
+					function showProd3(n) {
+			  			var i;
+			  			var prods = document.getElementsByName("stonelotus");
+			  
+			  			if (n > prods.length - 5) {prodIndex = prods.length - 5}    
+			  			if (n < 0) {prodIndex = 0}
+			  			for (i = 0; i < prods.length; i++) {
+			      			prods[i].style.display = "none";  
+			  			}
+			  			var x;
+				  		for(i=4;i>=0;i--){
+				  			x = Math.abs(prodIndex+i);
+				  			prods[x].style.display = "block";
+				  			prods[x].style.animation = "slideMoving 2s forwards";
+				 		}
+					}
+				</script>
+				<a class="prev" onclick="plusProducts3(-1)">&#10094;</a>
+				<a class="next" onclick="plusProducts3(1)">&#10095;</a>
+			</div>
+			<div class="products-home">
+				<div class="name-card" onclick="disPlay(this)">CÂY CẢNH TRONG NHÀ</div>
+				<div id="in-house-products"></div>
+				<script type="text/javascript">
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text = '';
+					var i;
+					for(i = 0;i<product.length;i++){
+						if(product[i].species == 'Cây Cảnh Trong Nhà'){
+							text += '<a href="ProductInfo.html"><div class="products-card" name="inhouse" onclick="rememberProduct('+ product[i].code +')"><img src="'+ product[i].image +'" style="width:150px; height:150px;" ><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+						}
+					}
+					document.getElementById("in-house-products").innerHTML = text;
+					var prodIndex = 0;
+					showProd4(prodIndex);
+
+					function plusProducts4(n) {
+
+			  			showProd4(prodIndex += n);
+					}
+
+					function showProd4(n) {
+			  			var i;
+			  			var prods = document.getElementsByName("inhouse");
+			  
+			  			if (n > prods.length - 5) {prodIndex = prods.length - 5}    
+			  			if (n < 0) {prodIndex = 0}
+			  			for (i = 0; i < prods.length; i++) {
+			      			prods[i].style.display = "none";  
+			  			}
+			  			var x;
+				  		for(i=4;i>=0;i--){
+				  			x = Math.abs(prodIndex+i);
+				  			prods[x].style.display = "block";
+				  			prods[x].style.animation = "slideMoving 2s forwards";
+				 		}
+					}
+				</script>
+				<a class="prev" onclick="plusProducts4(-1)">&#10094;</a>
+				<a class="next" onclick="plusProducts4(1)">&#10095;</a>
+			</div>
+			<div class="products-home">
+				<div class="name-card" onclick="disPlay(this)">CÂY CẢNH VĂN PHÒNG</div>
+				<div id="office-products"></div>
+				<script type="text/javascript">
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text = '';
+					var i;
+					for(i = 0;i<product.length;i++){
+						if(product[i].species == 'Cây Cảnh Văn Phòng'){
+							text += '<a href="ProductInfo.html"><div class="products-card" name="office" onclick="rememberProduct('+ product[i].code +')"><img src="'+ product[i].image +'" style="width:150px; height:150px;" ><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+						}
+					}
+					document.getElementById("office-products").innerHTML = text;
+					var prodIndex = 0;
+					showProd5(prodIndex);
+
+					function plusProducts5(n) {
+
+			  			showProd5(prodIndex += n);
+					}
+
+					function showProd5(n) {
+			  			var i;
+			  			var prods = document.getElementsByName("office");
+			  
+			  			if (n > prods.length - 5) {prodIndex = prods.length - 5}    
+			  			if (n < 0) {prodIndex = 0}
+			  			for (i = 0; i < prods.length; i++) {
+			      			prods[i].style.display = "none";  
+			  			}
+			  			var x;
+				  		for(i=4;i>=0;i--){
+				  			x = Math.abs(prodIndex+i);
+				  			prods[x].style.display = "block";
+				  			prods[x].style.animation = "slideMoving 2s forwards";
+				 		}
+					}
+				</script>
+				<a class="prev" onclick="plusProducts5(-1)">&#10094;</a>
+				<a class="next" onclick="plusProducts5(1)">&#10095;</a>
+			</div>
+			<div class="products-home">
+				<div class="name-card" onclick="disPlay(this)">CÂY XƯƠNG RỒNG</div>
+				<div id="cactus-products"></div>
+				<script type="text/javascript">
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text = '';
+					var i;
+					for(i = 0;i<product.length;i++){
+						if(product[i].species == 'Cây Xương Rồng'){
+							text += '<a href="ProductInfo.html"><div class="products-card" name="cactus" onclick="rememberProduct('+ product[i].code +')"><img src="'+ product[i].image +'" style="width:150px; height:150px;" ><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+						}
+					}
+					document.getElementById("cactus-products").innerHTML = text;
+					var prodIndex = 0;
+					showProd6(prodIndex);
+
+					function plusProducts6(n) {
+
+			  			showProd6(prodIndex += n);
+					}
+
+					function showProd6(n) {
+			  			var i;
+			  			var prods = document.getElementsByName("cactus");
+			  
+			  			if (n > prods.length - 5) {prodIndex = prods.length - 5}    
+			  			if (n < 0) {prodIndex = 0}
+			  			for (i = 0; i < prods.length; i++) {
+			      			prods[i].style.display = "none";  
+			  			}
+			  			var x;
+				  		for(i=4;i>=0;i--){
+				  			x = Math.abs(prodIndex+i);
+				  			prods[x].style.display = "block";
+				  			prods[x].style.animation = "slideMoving 2s forwards";
+				 		}
+					}
+				</script>
+				<a class="prev" onclick="plusProducts6(-1)">&#10094;</a>
+				<a class="next" onclick="plusProducts6(1)">&#10095;</a>
+			</div>
+			<div class="products-home">
+				<div class="name-card" onclick="disPlay(this)">CÂY THỦY SINH</div>
+				<div id="aquatic-plant-products"></div>
+				<script type="text/javascript">
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text = '';
+					var i;
+					for(i = 0;i<product.length;i++){
+						if(product[i].species == 'Cây Thủy Sinh'){
+							text += '<a href="ProductInfo.html"><div class="products-card" name="aquaticplant" onclick="rememberProduct('+ product[i].code +')"><img src="'+ product[i].image +'" style="width:150px; height:150px;" ><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+						}
+					}
+					document.getElementById("aquatic-plant-products").innerHTML = text;
+					var prodIndex = 0;
+					showProd7(prodIndex);
+
+					function plusProducts7(n) {
+
+			  			showProd7(prodIndex += n);
+					}
+
+					function showProd7(n) {
+			  			var i;
+			  			var prods = document.getElementsByName("aquaticplant");
+			  
+			  			if (n > prods.length - 5) {prodIndex = prods.length - 5}    
+			  			if (n < 0) {prodIndex = 0}
+			  			for (i = 0; i < prods.length; i++) {
+			      			prods[i].style.display = "none";  
+			  			}
+			  			var x;
+				  		for(i=4;i>=0;i--){
+				  			x = Math.abs(prodIndex+i);
+				  			prods[x].style.display = "block";
+				  			prods[x].style.animation = "slideMoving 2s forwards";
+				 		}
+					}
+				</script>
+				<a class="prev" onclick="plusProducts7(-1)">&#10094;</a>
+				<a class="next" onclick="plusProducts7(1)">&#10095;</a>
+			</div>
+			<div class="products-home">
+				<div class="name-card" onclick="disPlay(this)">TERRARIUM</div>
+				<div id="terrarium-products"></div>
+				<script type="text/javascript">
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text = '';
+					var i;
+					for(i = 0;i<product.length;i++){
+						if(product[i].species == 'Terrarium'){
+							text += '<a href="ProductInfo.html"><div class="products-card" name="terrarium" onclick="rememberProduct('+ product[i].code +')"><img src="'+ product[i].image +'" style="width:150px; height:150px;" ><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+						}
+					}
+					document.getElementById("terrarium-products").innerHTML = text;
+					var prodIndex = 0;
+					showProd8(prodIndex);
+
+					function plusProducts8(n) {
+
+			  			showProd8(prodIndex += n);
+					}
+
+					function showProd8(n) {
+			  			var i;
+			  			var prods = document.getElementsByName("terrarium");
+			  
+			  			if (n > prods.length - 5) {prodIndex = prods.length - 5}    
+			  			if (n < 0) {prodIndex = 0}
+			  			for (i = 0; i < prods.length; i++) {
+			      			prods[i].style.display = "none";  
+			  			}
+			  			var x;
+				  		for(i=4;i>=0;i--){
+				  			x = Math.abs(prodIndex+i);
+				  			prods[x].style.display = "block";
+				  			prods[x].style.animation = "slideMoving 2s forwards";
+				 		}
+					}
+				</script>
+				<a class="prev" onclick="plusProducts8(-1)">&#10094;</a>
+				<a class="next" onclick="plusProducts8(1)">&#10095;</a>
+			</div>
+		</div>
+
+	 </section>
+	 <script type="text/javascript">
+	 	function rememberProduct(code){
+			var i;
+			var remember;
+			var product = JSON.parse(localStorage.getItem('products'));
+			for(i=0;i<product.length;i++){
+				if(product[i].code == code){
+		 			remember = product[i];
+				}
+		 	}
+			localStorage.setItem('remember',JSON.stringify(remember));
+		}
+	 </script>
+
+	 <!--Phan footer-->
+	 <footer>
+		<div class="footer-top">
+		    <li><a href="Index.html"><img src="Image/dathongbao.png" alt=""></a></li>
+		    <li><a href="Introduce.html">Giới thiệu</a></li>
+		    <li><a href="Contact.html">Liên hệ</a></li>
+		    <li><a href="Contact.html">Thông tin khuyến mãi</a></li>
+		    <li>
+		        <a href="https://vi-vn.facebook.com/" class="fab fa-facebook-f" style="color: blue;"></a>
+		        <a href="https://twitter.com/?lang=vi" class="fab fa-twitter" style="color: #1DA4BC;"></a>
+		        <a href="https://www.youtube.com/" class="fab fa-youtube" style="color: red;"></a>
+		    </li>
+		</div>
+		<div class="footer-center">
+		    <p>
+		       Nhóm đề tài Phát Triển Ứng Dụng Web 1 <br>
+		       Địa chỉ: Trường Đại Học Sài Gòn, 273, An Dương Vương, Phường 3, Quận 5, TP.Hồ Chí Minh, Việt Nam<br>
+		       Đặt hàng online : <a style="color: white;" href=""><b>0111 222 3333</b></a> .
+		    </p>
+		</div>
+		<div class="footer-bottom">
+		    ©Vườn Cây Mini All rights reserved
+		</div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+	<title>Vườn Cây Mini - Không gian đẹp cho khu vườn của bạn</title>
+	<link rel="stylesheet" href="Css/style.css">
+	<link rel="stylesheet" href="Css/fontawesome-free-5.15.1-web/css/all.css">
+</head>
+<body>
+	<header class="header">
+		
+		<div class="header-top">
+			<div class="logo" align="right">
+				<a href="Index.html"><img src="./Image/Logo/Logo.png" width="250px"></a>
+			</div>
+			<div class="search" >
+				<form >
+					<input placeholder="Bạn muốn tìm?..." type="text">
+					<label class="search-icon"><i class="fa fa-search"></i></label>
+				</form>
+			</div>
+			<div class="login" >
+				<i class="fa fa-user"></i>
+				<a id="name-user" href="Login.html" > 
+					ĐĂNG NHẬP
+				</a>
+				<script type="text/javascript">
+					window.onload = function(){
+						reloadUser();
+						
+					}
+					var user = JSON.parse(localStorage.getItem('userLoging'));
+					var text = ' '+ user.firstname +' ' + user.lastname +' ';
+					document.getElementById("name-user").innerHTML = text;
+					if(user.permission == 'user'){
+						document.getElementById("name-user").href = './User/User.html';
+					}else if(user.permission == 'admin'){
+						document.getElementById("name-user").href = './Admin/Admin.html';
+					}
+					function reloadUser(){
+						var userLoging = JSON.parse(localStorage.getItem('userLoging'));	
+						var users = JSON.parse(localStorage.getItem('users'));
+						var check = false;
+						for(i = 0; i<users.length;i++){
+							if(users[i].username == userLoging.username){
+								check = true;
+							}
+						}
+						if(check == false){
+							var temp = '[';
+							localStorage.removeItem('users');
+							for(i=0;i<users.length;i++){
+								temp += JSON.stringify(users[i]) + ',';
+							}
+							temp += JSON.stringify(userLoging) + ']';
+							localStorage.setItem('users', temp);
+						}
+					}
+				</script>
+			</div>
+			<div class="package">
+				<i class="fa fa-shopping-bag"></i>
+				<a href="Cart.html" >
+					GIỎ HÀNG
+				</a>
+				<div id="numberProductOfCart" style="color: #80A13D;font-weight: bold;"> (0) </div>
+				<script type="text/javascript">
+					var numberProductOfCart = JSON.parse(localStorage.getItem('carts'));
+					var text = '('+ numberProductOfCart.length +')';
+					document.getElementById("numberProductOfCart").innerHTML = text;
+				</script>
+			</div>
+		</div>
+		<div class="header-bottom">
+			<nav class="menu">
+    			<ul class="clearfix">
+		            <li id="home"><a href="Index.html" >TRANG CHỦ</a></li>
+		            <li id="intr"><a href="Introduce.html" style="color: black;">GIỚI THIỆU</a></li>
+		            <li id="prod">
+		                <a href="Product.html">SẢN PHẨM</a>
+		                <ul class="sub-menu">
+		                    <li id="bons"><a href="Product.html#bons"><img src="./Image/Icon/icon-bonsai.png">Bonsai</a></li>
+		                    <li id="seda"><a href="Product.html#seda"><img src="./Image/Icon/icon-cay-canh-sen-da.png" >Cây Cảnh Sen Đá</a></li>
+		                    <li id="tnha"><a href="Product.html#tnha"><img src="./Image/Icon/icon-cay-canh-trong-nha.png">Cây Cảnh Trong Nhà</a></li>
+		                    <li id="vanp"><a href="Product.html#vanp"><img src="./Image/Icon/icon-cay-canh-van-phong.png">Cây Cảnh Văn Phòng</a></li>
+		                    <li id="xuro"><a href="Product.html#xuro"><img src="./Image/Icon/icon-xuong-rong.png">Cây Xương Rồng</a></li>
+		                    <li id="thsi"><a href="Product.html#thsi"><img src="./Image/Icon/icon-cay-thuy-sinh.png">Cây Thủy Sinh</a></li>
+		      				<li id="terr"><a href="Product.html#terr"><img src="./Image/Icon/icon-terrarium.png">TERRARIUM</a></li>
+		                </ul>
+		            </li>
+		            <li id="cont"><a href="Contact.html">LIÊN HỆ</a></li>
+		        </ul>
+			</nav>
+			
+		</div>
+	
+	</header>
+	
+	<!--Phan introduce-->
+	<section class="container">
+		<div class="introduce-container">
+			<div class="introduce-top">
+				
+			</div>
+			<div class="introduce-middle">
+				<div class="top">
+					<div class="top-inner">
+						<h1 style="text-align: center;"><span style="font-size: 150%;">Vườn Cây Mini</span></h1>
+						<p style="text-align: center;"><span style="font-size: 16.56px;">Hoạt động lâu năm trong lĩnh vực trang trí sân vườn và chuyên cung cấp các loại cây cảnh loại</span></p>
+					</div>
+				</div>
+				<div class="bottom">
+					<div class="left">
+						<div class="icon-box">
+							<div class="icon-inner"  >
+								<img width="128" height="128" src="./Image/Introduce/Hinh1.png" alt="" align="center">
+							</div>
+						</div>
+						<div class="icon-box-text">	
+							<p style="font-size: 20px;">Vườn cây mini</p>
+							<p>Chuyên cung cấp và chăm sóc cây cảnh,cây văn phòng,cao ốc</p>
+						</div>
+						<div class="icon-box-text">		
+							<h3>Responsive</h3>
+							<p>Công ty luôn cung cấp những sản phẩm đẹp,những công trình độc đáo cao đến với khách hàng</p>
+						</div>
+					</div>
+					<div class="middle">
+						<div class="banner-layers">
+            				<img width="600" height="600" src="./Image/Introduce/Banner.jpg"  alt="" align="center">        
+        				</div>
+					</div>
+					<div class="right">
+						<div class="icon-inner">
+							<img width="64" height="64" src="./Image/Introduce/Hinh2.png" alt="" align="center">					
+						</div>
+						<div class="icon-box-text">		
+							<h3>Unlimited Options</h3>
+							<p>Nhận thi công thiết kế sân vườn cho các khu nhà ở,biệt thự,vườn sinh thái,sân vườn cho các công ty nhà máy,công viên</p>
+						</div>
+						<div class="icon-box-text">	
+							<h3>Customize Anything</h3>
+							<p>Nhận trồng và bảo dưỡng các công trình cảnh quan,cây xanh,cây cảnh với chất lương tốt nhất giá cả hợp lý</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!--Phan footer-->
+	<footer>
+		<div class="footer-top">
+		    <li><a href="Index.html"><img src="Image/dathongbao.png" alt=""></a></li>
+		    <li><a href="Introduce.html">Giới thiệu</a></li>
+		    <li><a href="Contact.html">Liên hệ</a></li>
+		    <li><a href="Contact.html">Thông tin khuyến mãi</a></li>
+		    <li>
+		        <a href="https://vi-vn.facebook.com/" class="fab fa-facebook-f" style="color: blue;"></a>
+		        <a href="https://twitter.com/?lang=vi" class="fab fa-twitter" style="color: #1DA4BC;"></a>
+		        <a href="https://www.youtube.com/" class="fab fa-youtube" style="color: red;"></a>
+		    </li>
+		</div>
+		<div class="footer-center">
+		    <p>
+		       Nhóm đề tài Phát Triển Ứng Dụng Web 1 <br>
+		       Địa chỉ: Trường Đại Học Sài Gòn, 273, An Dương Vương, Phường 3, Quận 5, TP.Hồ Chí Minh, Việt Nam<br>
+		       Đặt hàng online : <a style="color: white;" href=""><b>0111 222 3333</b></a> .
+		    </p>
+		</div>
+		<div class="footer-bottom">
+		    ©Vườn Cây Mini All rights reserved
+		</div>
+	</footer>
+</body>
+</html>

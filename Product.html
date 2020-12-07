@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+	<title>Vườn Cây Mini - Không gian đẹp cho khu vườn của bạn</title>
+	<link rel="stylesheet" href="Css/style.css">
+	<link rel="stylesheet" href="Css/fontawesome-free-5.15.1-web/css/all.css">
+</head>
+<body>
+	<header class="header">
+		
+		<div class="header-top">
+			<div class="logo" align="right">
+				<a href="Index.html"><img src="./Image/Logo/Logo.png" width="250px"></a>
+			</div>
+			<div class="search" >
+				<form >
+					<input placeholder="Bạn muốn tìm?..." type="text">
+					<label class="search-icon"><i class="fa fa-search"></i></label>
+				</form>
+			</div>
+			<div class="login" >
+				<i class="fa fa-user"></i>
+				<a id="name-user" href="Login.html" > 
+					ĐĂNG NHẬP
+				</a>
+				<script type="text/javascript">
+					window.onload = function(){
+						reloadUser();
+						
+					}
+					var user = JSON.parse(localStorage.getItem('userLoging'));
+					var text = ' '+ user.firstname +' ' + user.lastname +' ';
+					document.getElementById("name-user").innerHTML = text;
+					if(user.permission == 'user'){
+						document.getElementById("name-user").href = './User/User.html';
+					}else if(user.permission == 'admin'){
+						document.getElementById("name-user").href = './Admin/Admin.html';
+					}
+					function reloadUser(){
+						var userLoging = JSON.parse(localStorage.getItem('userLoging'));	
+						var users = JSON.parse(localStorage.getItem('users'));
+						var check = false;
+						for(i = 0; i<users.length;i++){
+							if(users[i].username == userLoging.username){
+								check = true;
+							}
+						}
+						if(check == false){
+							var temp = '[';
+							localStorage.removeItem('users');
+							for(i=0;i<users.length;i++){
+								temp += JSON.stringify(users[i]) + ',';
+							}
+							temp += JSON.stringify(userLoging) + ']';
+							localStorage.setItem('users', temp);
+						}
+					}
+				</script>
+			</div>
+			<div class="package">
+				<i class="fa fa-shopping-bag"></i>
+				<a href="Cart.html" >
+					GIỎ HÀNG
+				</a>
+				<div id="numberProductOfCart" style="color: #80A13D;font-weight: bold;"> (0) </div>
+				<script type="text/javascript">
+					var numberProductOfCart = JSON.parse(localStorage.getItem('carts'));
+					var text = '('+ numberProductOfCart.length +')';
+					document.getElementById("numberProductOfCart").innerHTML = text;
+				</script>
+			</div>
+		</div>
+		<div class="header-bottom">
+			<nav class="menu">
+    			<ul class="clearfix">
+		            <li id="home"><a href="Index.html" >TRANG CHỦ</a></li>
+		            <li id="intr"><a href="Introduce.html" >GIỚI THIỆU</a></li>
+		            <li id="prod">
+		                <a href="Product.html" style="color: black;">SẢN PHẨM</a>
+		                <ul class="sub-menu">
+		                    <li id="bons" onclick="showBonsai(0)"><a href="#bons"><img src="./Image/Icon/icon-bonsai.png">Bonsai</a></li>
+			                <li id="seda" onclick="showSenDa(0)"><a href="#seda"><img src="./Image/Icon/icon-cay-canh-sen-da.png">Cây Cảnh Sen Đá</a></li>
+			                <li id="tnha" onclick="showTrongNha(0)"><a href="#tnha"><img src="./Image/Icon/icon-cay-canh-trong-nha.png">Cây Cảnh Trong Nhà</a></li>
+			                <li id="vanp" onclick="showVanPhong(0)"><a href="#vanp"><img src="./Image/Icon/icon-cay-canh-van-phong.png">Cây Cảnh Văn Phòng</a></li>
+			                <li id="xuro" onclick="showXuongRong(0)"><a href="#xuro"><img src="./Image/Icon/icon-xuong-rong.png">Cây Xương Rồng</a></li>
+			                <li id="thsi" onclick="showThuySinh(0)"><a href="#thsi"><img src="./Image/Icon/icon-cay-thuy-sinh.png">Cây Thủy Sinh</a></li>
+			  				<li id="terr" onclick="showTERRARIUM(0)"><a href="#terr"><img src="./Image/Icon/icon-terrarium.png">TERRARIUM</a></li>
+		                </ul>
+		            </li>
+		            <li id="cont"><a href="Contact.html" >LIÊN HỆ</a></li>
+		        </ul>
+			</nav>
+			
+		</div>
+	
+	</header>
+	
+	<!--Phan product-->
+	<section class="wrap">
+		<div class="menu-left">
+			<div style="font-size:20px;font-weight: bold;background-color:#80A13D;padding:20px;">Danh Mục Sản Phẩm</div>
+			<ul>
+                <li id="bons" onclick="showBonsai(0)"><a href="#bons"><img src="./Image/Icon/icon-bonsai.png">Bonsai</a>
+                	<script type="text/javascript">
+						function showBonsai(n){
+							createProduct();
+							document.getElementById("numberpage-product").style.display = 'block';
+							var i;
+				  			var prods = document.getElementsByClassName("products-card-main");
+				  
+				  			for (i = 0; i < prods.length; i++) {
+				      			prods[i].style.display = "none";  
+				  			}
+				  			
+				  			var prodsBonsai = document.getElementsByName("Bonsai");
+				  
+					  		for(i=n*8;i<n*8+8;i++){
+					  			
+					  			prodsBonsai[i].style.display = "block";
+					  			prodsBonsai[i].style.animation = "slideMoving 4s forwards";
+					 		}
+
+							var numberPage = prodsBonsai.length /8;
+							var text2 = '';
+							for(i=0;i<numberPage;i++){
+								text2 += '<div class="numberpage" style="text-align:center;position:relative;left:700px;" onclick="showBonsai('+ i +')">'+ (i+1) +'</div>';
+							}
+							document.getElementById("numberpage-product").innerHTML = text2;
+						}
+					</script>
+                </li>
+                <li id="seda" onclick="showSenDa(0)"><a href="#seda"><img src="./Image/Icon/icon-cay-canh-sen-da.png">Cây Cảnh Sen Đá</a>
+                	<script type="text/javascript">
+						function showSenDa(n){
+							createProduct();
+							document.getElementById("numberpage-product").style.display = 'block';
+							var i;
+				  			var prods = document.getElementsByClassName("products-card-main");
+				  
+				  			for (i = 0; i < prods.length; i++) {
+				      			prods[i].style.display = "none";  
+				  			}
+				  			
+				  			var prodsSD = document.getElementsByName("Cây Cảnh Sen Đá");
+				  
+					  		for(i=n*8;i<n*8+8;i++){
+					  			
+					  			prodsSD[i].style.display = "block";
+					  			prodsSD[i].style.animation = "slideMoving 4s forwards";
+					 		}
+
+							var numberPage = prodsSD.length /8;
+							var text2 = '';
+							for(i=0;i<numberPage;i++){
+								text2 += '<div class="numberpage" style="text-align:center;position:relative;left:700px;" onclick="showSenDa('+ i +')">'+ (i+1) +'</div>';
+							}
+							document.getElementById("numberpage-product").innerHTML = text2;
+						}
+					</script>
+                </li>
+                <li id="tnha" onclick="showTrongNha(0)"><a href="#tnha"><img src="./Image/Icon/icon-cay-canh-trong-nha.png">Cây Cảnh Trong Nhà</a>
+                	<script type="text/javascript">
+						function showTrongNha(n){
+							createProduct();
+							document.getElementById("numberpage-product").style.display = 'block';
+							var i;
+				  			var prods = document.getElementsByClassName("products-card-main");
+				  
+				  			for (i = 0; i < prods.length; i++) {
+				      			prods[i].style.display = "none";  
+				  			}
+				  			
+				  			var prodsTN = document.getElementsByName("Cây Cảnh Trong Nhà");
+				  
+					  		for(i=n*8;i<n*8+8;i++){
+					  			
+					  			prodsTN[i].style.display = "block";
+					  			prodsTN[i].style.animation = "slideMoving 4s forwards";
+					 		}
+
+							var numberPage = prodsTN.length /8;
+							var text2 = '';
+							for(i=0;i<numberPage;i++){
+								text2 += '<div class="numberpage" style="text-align:center;position:relative;left:700px;" onclick="showTrongNha('+ i +')">'+ (i+1) +'</div>';
+							}
+							document.getElementById("numberpage-product").innerHTML = text2;
+						}
+					</script>
+                </li>
+                <li id="vanp" onclick="showVanPhong(0)"><a href="#vanp"><img src="./Image/Icon/icon-cay-canh-van-phong.png">Cây Cảnh Văn Phòng</a>
+                	<script type="text/javascript">
+						function showVanPhong(n){
+							createProduct();
+							document.getElementById("numberpage-product").style.display = 'block';
+							var i;
+				  			var prods = document.getElementsByClassName("products-card-main");
+				  
+				  			for (i = 0; i < prods.length; i++) {
+				      			prods[i].style.display = "none";  
+				  			}
+				  			
+				  			var prodsVP = document.getElementsByName("Cây Cảnh Văn Phòng");
+				  
+					  		for(i=n*8;i<n*8+8;i++){
+					  			
+					  			prodsVP[i].style.display = "block";
+					  			prodsVP[i].style.animation = "slideMoving 4s forwards";
+					 		}
+
+							var numberPage = prodsVP.length /8;
+							var text2 = '';
+							for(i=0;i<numberPage;i++){
+								text2 += '<div class="numberpage" style="text-align:center;position:relative;left:700px;" onclick="showVanPhong('+ i +')">'+ (i+1) +'</div>';
+							}
+							document.getElementById("numberpage-product").innerHTML = text2;
+						}
+					</script>
+                </li>
+                <li id="xuro" onclick="showXuongRong(0)"><a href="#xuro"><img src="./Image/Icon/icon-xuong-rong.png">Cây Xương Rồng</a>
+                	<script type="text/javascript">
+						function showXuongRong(n){
+							createProduct();
+							document.getElementById("numberpage-product").style.display = 'block';
+							var i;
+				  			var prods = document.getElementsByClassName("products-card-main");
+				  
+				  			for (i = 0; i < prods.length; i++) {
+				      			prods[i].style.display = "none";  
+				  			}
+				  			
+				  			var prodsXR = document.getElementsByName("Cây Xương Rồng");
+				  
+					  		for(i=n*8;i<n*8+8;i++){
+					  			
+					  			prodsXR[i].style.display = "block";
+					  			prodsXR[i].style.animation = "slideMoving 4s forwards";
+					 		}
+
+							var numberPage = prodsXR.length /8;
+							var text2 = '';
+							for(i=0;i<numberPage;i++){
+								text2 += '<div class="numberpage" style="text-align:center;position:relative;left:700px;" onclick="showXuongRong('+ i +')">'+ (i+1) +'</div>';
+							}
+							document.getElementById("numberpage-product").innerHTML = text2;
+						}
+					</script>
+                </li>
+                <li id="thsi" onclick="showThuySinh(0)"><a href="#thsi"><img src="./Image/Icon/icon-cay-thuy-sinh.png">Cây Thủy Sinh</a>
+                	<script type="text/javascript">
+						function showThuySinh(n){
+							createProduct();
+							document.getElementById("numberpage-product").style.display = 'block';
+							var i;
+				  			var prods = document.getElementsByClassName("products-card-main");
+				  
+				  			for (i = 0; i < prods.length; i++) {
+				      			prods[i].style.display = "none";  
+				  			}
+				  			
+				  			var prodsTS = document.getElementsByName("Cây Thủy Sinh");
+				  
+					  		for(i=n*8;i<n*8+8;i++){
+					  			
+					  			prodsTS[i].style.display = "block";
+					  			prodsTS[i].style.animation = "slideMoving 4s forwards";
+					 		}
+
+							var numberPage = prodsTS.length /8;
+							var text2 = '';
+							for(i=0;i<numberPage;i++){
+								text2 += '<div class="numberpage" style="text-align:center;position:relative;left:700px;" onclick="showThuySinh('+ i +')">'+ (i+1) +'</div>';
+							}
+							document.getElementById("numberpage-product").innerHTML = text2;
+						}
+					</script>
+                </li>
+  				<li id="terr" onclick="showTERRARIUM(0)"><a href="#terr"><img src="./Image/Icon/icon-terrarium.png">TERRARIUM</a>
+  					<script type="text/javascript">
+						function showTERRARIUM(n){
+							createProduct();
+							document.getElementById("numberpage-product").style.display = 'block';
+							var i;
+				  			var prods = document.getElementsByClassName("products-card-main");
+				  
+				  			for (i = 0; i < prods.length; i++) {
+				      			prods[i].style.display = "none";  
+				  			}
+				  			
+				  			var prodsTR = document.getElementsByName("Terrarium");
+				  
+					  		for(i=n*8;i<n*8+8;i++){
+					  			
+					  			prodsTR[i].style.display = "block";
+					  			prodsTR[i].style.animation = "slideMoving 4s forwards";
+					 		}
+
+							var numberPage = prodsTR.length /8;
+							var text2 = '';
+							for(i=0;i<numberPage;i++){
+								text2 += '<div class="numberpage" style="text-align:center;position:relative;left:700px;" onclick="showTERRARIUM('+ i +')">'+ (i+1) +'</div>';
+							}
+							document.getElementById("numberpage-product").innerHTML = text2;
+						}
+					</script>
+  				</li>
+            </ul>
+		</div>
+		<div class="main-content" style="">
+			<div id="content-product"></div>
+			<div id="numberpage-product" ></div>
+			<script type="text/javascript">
+					
+				phanTrang(0);
+				function phanTrang(n){
+					createProduct();
+					createNumberDot();
+
+					var i;
+		  			var prods = document.getElementsByClassName("products-card-main");
+		  
+		  			for (i = 0; i < prods.length; i++) {
+		      			prods[i].style.display = "none";  
+		  			}
+		  			
+			  		for(i=n*8;i<n*8+8;i++){
+			  			
+			  			prods[i].style.display = "block";
+			  			prods[i].style.animation = "slideMoving 4s forwards";
+			 		}
+				}
+
+				function createProduct(){
+					var i;
+					var product = JSON.parse(localStorage.getItem('products'));
+					var text1 = '';
+					for(i=0;i<product.length;i++){
+				 		text1 += '<a href="ProductInfo.html"><div class="products-card-main" name="'+ product[i].species +'" onclick="rememberProduct('+ product[i].code+')"><img src="'+ product[i].image +'" style="width:250px; height:250px;" ><p>' + product[i].species + '<br>'+ product[i].name +'<br>Giá bán: <b>'+ product[i].price +'</b></p><div class="add-to-cart">Thêm Vào Giỏ</div></div></a>';
+				 	}
+					text1+='<div style="clear:both;"></div>';
+					document.getElementById("content-product").innerHTML = text1;
+				}
+				
+				function createNumberDot(){
+					var i;
+					var product = JSON.parse(localStorage.getItem('products'));
+					var numberPage = product.length /8;
+					var text2 = '';
+					for(i=0;i<numberPage;i++){
+						text2 += '<div class="numberpage" style="text-align:center;" align="center" onclick="phanTrang('+ i +')">'+ (i+1) +'</div>';
+					}
+					document.getElementById("numberpage-product").innerHTML = text2;
+				}
+				function rememberProduct(code){
+					var i;
+					var remember;
+					var product = JSON.parse(localStorage.getItem('products'));
+					for(i=0;i<product.length;i++){
+						if(product[i].code == code){
+				 			remember = product[i];
+						}
+				 	}
+					localStorage.setItem('remember',JSON.stringify(remember));
+
+				}
+			</script>
+		</div>
+	</section>
+
+	<!--Phan footer-->
+	<footer>
+		<div class="footer-top">
+		    <li><a href="Index.html"><img src="Image/dathongbao.png" alt=""></a></li>
+		    <li><a href="Introduce.html">Giới thiệu</a></li>
+		    <li><a href="Contact.html">Liên hệ</a></li>
+		    <li><a href="Contact.html">Thông tin khuyến mãi</a></li>
+		    <li>
+		        <a href="https://vi-vn.facebook.com/" class="fab fa-facebook-f" style="color: blue;"></a>
+		        <a href="https://twitter.com/?lang=vi" class="fab fa-twitter" style="color: #1DA4BC;"></a>
+		        <a href="https://www.youtube.com/" class="fab fa-youtube" style="color: red;"></a>
+		    </li>
+		</div>
+		<div class="footer-center">
+		    <p>
+		       Nhóm đề tài Phát Triển Ứng Dụng Web 1 <br>
+		       Địa chỉ: Trường Đại Học Sài Gòn, 273, An Dương Vương, Phường 3, Quận 5, TP.Hồ Chí Minh, Việt Nam<br>
+		       Đặt hàng online : <a style="color: white;" href=""><b>0111 222 3333</b></a> .
+		    </p>
+		</div>
+		<div class="footer-bottom">
+		    ©Vườn Cây Mini All rights reserved
+		</div>
+	</footer>
+</body>
+</html>
